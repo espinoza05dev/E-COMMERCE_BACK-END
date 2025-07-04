@@ -1,4 +1,4 @@
-package saeg.ecommerceback.test.REDIS.controller;
+package saeg.ecommerceback.controller;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -12,9 +12,9 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/redis-test")
-public class TrialControllerRedis {
+public class ControllerRedis {
     private final RedisTemplate<String, String> redisTemplate;
-    public TrialControllerRedis(RedisTemplate<String, String> redisTemplate) {
+    public ControllerRedis(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

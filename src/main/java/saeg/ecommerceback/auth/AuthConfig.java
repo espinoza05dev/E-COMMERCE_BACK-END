@@ -1,4 +1,4 @@
-package saeg.ecommerceback.test.REDIS.config;
+package saeg.ecommerceback.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

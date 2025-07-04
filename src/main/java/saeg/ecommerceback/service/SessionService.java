@@ -1,4 +1,4 @@
-package saeg.ecommerceback.test.REDIS.services;
+package saeg.ecommerceback.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -13,9 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/session-test")
-public class TrialSessionService {
-
-
+public class SessionService {
 
         // Probar sesiones con Redis
         @PostMapping("/login/{username}")

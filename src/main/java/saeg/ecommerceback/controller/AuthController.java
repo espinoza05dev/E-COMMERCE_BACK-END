@@ -1,4 +1,4 @@
-package saeg.ecommerceback.test.REDIS.controller;
+package saeg.ecommerceback.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -15,11 +15,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthTestController {
+public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthTestController(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
+    public AuthController(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
     }

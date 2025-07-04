@@ -1,4 +1,4 @@
-package saeg.ecommerceback.test.REDIS.controller;
+package saeg.ecommerceback.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

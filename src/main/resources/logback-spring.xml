@@ -4,7 +4,7 @@
         <encoder>
             <pattern>%msg%n</pattern>
         </encoder>
-        <!-- THIS WILL ONLU SHOW ERRORS/ISSUES -->
+        <!-- THIS WILL ONLY SHOW ERRORS/ISSUES -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
         </filter>

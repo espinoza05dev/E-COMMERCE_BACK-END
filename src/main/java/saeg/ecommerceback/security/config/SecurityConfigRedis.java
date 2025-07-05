@@ -18,8 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfigRedis {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable()) // Desactivar CSRF para APIs REST
+        http.csrf(csrf -> csrf.disable()) // Desactivar CSRF para APIs REST
                 .authorizeHttpRequests(authz -> authz
                         // Permitir endpoints de prueba de Redis SIN autenticación
                         .requestMatchers("/api/redis-test/**").permitAll()

@@ -10,9 +10,9 @@ import saeg.ecommerceback.security.UserPrincipal;
 
 public class CustomUserDetailsService  implements UserDetailsService {
 
-    private final IUserRepository userRepository;
+    private static final IUserRepository userRepository = null;
     public CustomUserDetailsService(IUserRepository userRepository) {
-        this.userRepository = userRepository;
+        userRepository = userRepository;
     }
 
     @Override
@@ -23,7 +23,6 @@ public class CustomUserDetailsService  implements UserDetailsService {
      return new UserPrincipal(user);
     }
 
-    @Transactional
     public static UserDetails loadUserById(Integer id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + id));
 

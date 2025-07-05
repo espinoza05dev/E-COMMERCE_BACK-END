@@ -1,6 +1,5 @@
 package saeg.ecommerceback.security;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +21,9 @@ public class UserPrincipal implements UserDetails {
     Integer id;
     String FullName;
     String Email;
+
+    public UserPrincipal(User user) {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

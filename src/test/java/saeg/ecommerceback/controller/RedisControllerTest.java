@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ControllerRedisTest {
+class RedisControllerTest {
 
     @Mock
     private RedisTemplate<String, String> redisTemplate;
@@ -36,7 +36,7 @@ class ControllerRedisTest {
     private ValueOperations<String, String> valueOperations;
 
     @InjectMocks
-    private ControllerRedis controllerRedis;
+    private RedisController redisController;
 
     @Test
     void testPingRedisSuccess() {
@@ -46,7 +46,7 @@ class ControllerRedisTest {
         when(redisConnection.ping()).thenReturn("PONG");
 
         // When
-        ResponseEntity<String> response = controllerRedis.pingRedis();
+        ResponseEntity<String> response = redisController.pingRedis();
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -63,7 +63,7 @@ class ControllerRedisTest {
         when(redisConnection.ping()).thenThrow(new RuntimeException("Connection failed"));
 
         // When
-        ResponseEntity<String> response = controllerRedis.pingRedis();
+        ResponseEntity<String> response = redisController.pingRedis();
 
         // Then
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -77,7 +77,7 @@ class ControllerRedisTest {
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
 
         // When
-        ResponseEntity<String> response = controllerRedis.setValue("testkey", "testvalue");
+        ResponseEntity<String> response = redisController.setValue("testkey", "testvalue");
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -93,7 +93,7 @@ class ControllerRedisTest {
                 .set(any(), any(), any(Duration.class));
 
         // When
-        ResponseEntity<String> response = controllerRedis.setValue("testkey", "testvalue");
+        ResponseEntity<String> response = redisController.setValue("testkey", "testvalue");
 
         // Then
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -108,7 +108,7 @@ class ControllerRedisTest {
         when(valueOperations.get("testkey")).thenReturn("testvalue");
 
         // When
-        ResponseEntity<String> response = controllerRedis.getValue("testkey");
+        ResponseEntity<String> response = redisController.getValue("testkey");
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -124,7 +124,7 @@ class ControllerRedisTest {
         when(valueOperations.get("nonexistent")).thenReturn(null);
 
         // When
-        ResponseEntity<String> response = controllerRedis.getValue("nonexistent");
+        ResponseEntity<String> response = redisController.getValue("nonexistent");
 
         // Then
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -137,7 +137,7 @@ class ControllerRedisTest {
         when(valueOperations.get("testkey")).thenThrow(new RuntimeException("Redis error"));
 
         // When
-        ResponseEntity<String> response = controllerRedis.getValue("testkey");
+        ResponseEntity<String> response = redisController.getValue("testkey");
 
         // Then
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -152,7 +152,7 @@ class ControllerRedisTest {
         when(redisTemplate.keys("*")).thenReturn(keys);
 
         // When
-        ResponseEntity<Set<String>> response = controllerRedis.getAllKeys();
+        ResponseEntity<Set<String>> response = redisController.getAllKeys();
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -166,7 +166,7 @@ class ControllerRedisTest {
         when(redisTemplate.keys("*")).thenThrow(new RuntimeException("Redis error"));
 
         // When
-        ResponseEntity<Set<String>> response = controllerRedis.getAllKeys();
+        ResponseEntity<Set<String>> response = redisController.getAllKeys();
 
         // Then
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -179,7 +179,7 @@ class ControllerRedisTest {
         when(redisTemplate.delete("testkey")).thenReturn(true);
 
         // When
-        ResponseEntity<String> response = controllerRedis.deleteKey("testkey");
+        ResponseEntity<String> response = redisController.deleteKey("testkey");
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -194,7 +194,7 @@ class ControllerRedisTest {
         when(redisTemplate.delete("nonexistent")).thenReturn(false);
 
         // When
-        ResponseEntity<String> response = controllerRedis.deleteKey("nonexistent");
+        ResponseEntity<String> response = redisController.deleteKey("nonexistent");
 
         // Then
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -206,7 +206,7 @@ class ControllerRedisTest {
         when(redisTemplate.delete("testkey")).thenThrow(new RuntimeException("Redis error"));
 
         // When
-        ResponseEntity<String> response = controllerRedis.deleteKey("testkey");
+        ResponseEntity<String> response = redisController.deleteKey("testkey");
 
         // Then
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -220,7 +220,7 @@ class ControllerRedisTest {
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
 
         // When
-        ResponseEntity<String> response = controllerRedis.cacheWithTTL("testkey", "testvalue", 30);
+        ResponseEntity<String> response = redisController.cacheWithTTL("testkey", "testvalue", 30);
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -238,7 +238,7 @@ class ControllerRedisTest {
                 .set(any(), any(), any(Duration.class));
 
         // When
-        ResponseEntity<String> response = controllerRedis.cacheWithTTL("testkey", "testvalue", 30);
+        ResponseEntity<String> response = redisController.cacheWithTTL("testkey", "testvalue", 30);
 
         // Then
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -258,7 +258,7 @@ class ControllerRedisTest {
         when(redisConnection.info()).thenReturn(properties);
 
         // When
-        ResponseEntity<String> response = controllerRedis.getRedisInfo();
+        ResponseEntity<String> response = redisController.getRedisInfo();
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -274,7 +274,7 @@ class ControllerRedisTest {
         when(redisConnection.info()).thenThrow(new RuntimeException("Connection error"));
 
         // When
-        ResponseEntity<String> response = controllerRedis.getRedisInfo();
+        ResponseEntity<String> response = redisController.getRedisInfo();
 
         // Then
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());

@@ -12,9 +12,9 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/redis-test")
-public class ControllerRedis {
+public class RedisController {
     private final RedisTemplate<String, String> redisTemplate;
-    public ControllerRedis(RedisTemplate<String, String> redisTemplate) {
+    public RedisController(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

@@ -15,18 +15,20 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class SecurityProperties {
     @NotBlank
-    @Value("${JWT_SECRET}")
+    @Value("${jwt.secret}")
     private String jwtSecret;
 
     @NotNull
     @Positive
-    @Value("${JWT_EXPIRATION}")
+    @Value("${jwt.expiration}")
     private Long jwtExpiration;
 
-//    @NotBlank
-//    private String stripeApiKey;
-//
-//    @NotBlank
-//    private String sendgridApiKey;
+    @NotBlank
+    @Value("${stripe.api.key}")
+    private String stripeApiKey;
+
+    @NotBlank
+    @Value("${sendgrid.api.key}")
+    private String sendgridApiKey;
 
 }

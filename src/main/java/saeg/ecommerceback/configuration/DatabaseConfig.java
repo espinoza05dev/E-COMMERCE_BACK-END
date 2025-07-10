@@ -23,9 +23,9 @@ public class DatabaseConfig {
 
     @Bean
     @Primary
-    public DataSource dataSource(@Value("${DB_URL}") String url,
-                                 @Value("${DB_USER}")String username,
-                                 @Value("${DB_PASSWORD}") String password) {
+    public DataSource dataSource(@Value("${spring.datasource.url}") String url,
+                                 @Value("${spring.datasource.username}")String username,
+                                 @Value("${spring.datasource.password}") String password) {
         if (url.contains("localhost") && isProductionProfile()) {
             throw new IllegalStateException("Cannot use localhost database in production");
         }

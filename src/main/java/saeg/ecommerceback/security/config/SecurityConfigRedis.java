@@ -28,6 +28,7 @@ public class SecurityConfigRedis {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/health", "/actuator/health").permitAll()
+                        .requestMatchers("/trialproduct/v1/**").permitAll()
 
                         // Permitir recursos estáticos
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()

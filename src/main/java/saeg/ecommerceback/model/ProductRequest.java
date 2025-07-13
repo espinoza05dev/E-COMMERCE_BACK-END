@@ -2,6 +2,8 @@ package saeg.ecommerceback.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,25 +18,28 @@ import lombok.NoArgsConstructor;
 public class ProductRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long ProductId;
+    private Long ProductId;
 
     @Column(nullable = false)
     @NotBlank(message = "Product name is required")
-    String ProductName;
+    private String ProductName;
 
     @Column(nullable = false)
-    @NotBlank(message = "Product quantity is required")
-    Long ProductQuantity;
+    @NotNull(message = "Product quantity is required")
+    @Positive(message = "Product quantity must be positive")
+    private Long ProductQuantity;
 
-    String ProductDescription;
+    private String ProductDescription;
 
-    String ProductCurrency;
-
-    @Column(nullable = false)
-    @NotBlank(message = "Product price is required")
-    Long ProductPrice;
+    private String ProductCurrency;
 
     @Column(nullable = false)
-    @NotBlank(message = "Product stock is required")
-    Long ProductStock;
+    @NotNull(message = "Product price is required")
+    @Positive(message = "Product price must be positive")
+    private Long ProductPrice;
+
+    @Column(nullable = false)
+    @NotNull(message = "Product stock is required")
+    @Positive(message = "Product stock must be positive")
+    private Long ProductStock;
 }

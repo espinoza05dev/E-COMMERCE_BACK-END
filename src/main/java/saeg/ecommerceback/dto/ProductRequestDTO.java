@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ProductRequestDTO {
-    private Long ProductId;
-    private String ProductName;
-    private Long ProductQuantity;
-    private String ProductDescription;
-    private String ProductCurrency;
-    private Long ProductPrice;
-    private Long ProductStock;
+    private Long productId;
+    private String productName;
+    private Long productQuantity;
+    private String productDescription;
+    private String productCurrency;
+    private Long productPrice;
+    private Long productStock;
 }

@@ -6,7 +6,7 @@ import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import saeg.ecommerceback.model.ProductRequest;
+import saeg.ecommerceback.dto.ProductRequestDTO;
 import saeg.ecommerceback.dto.StripeResponseDTO;
 
 @Service
@@ -15,7 +15,7 @@ public class StripeService {
     @Value("${stripe.api.key}")
     private String stripeApiKey;
 
-    public StripeResponseDTO checkoutProducts(ProductRequest productRequest) {
+    public StripeResponseDTO checkoutProducts(ProductRequestDTO productRequest) {
         Stripe.apiKey = stripeApiKey;
 
         SessionCreateParams.LineItem.PriceData.ProductData productData =
@@ -24,18 +24,19 @@ public class StripeService {
                         .setDescription(productRequest.getProductDescription()) // Agregar descripción
                         .build();
 
-        SessionCreateParams.LineItem.PriceData priceData
-                = SessionCreateParams.LineItem.PriceData.builder()
-                .setCurrency(productRequest.getProductCurrency() == null ? "USD" : productRequest.getProductCurrency())
-                .setUnitAmount(productRequest.getProductQuantity()) // Precio unitario
+        SessionCreateParams.LineItem.PriceData priceData =
+                SessionCreateParams.LineItem.PriceData.builder()
+                .setUnitAmount(productRequest.getProductQuantity())
+                        .setCurrency(productRequest.getProductCurrency() == null ? "USD" : productRequest.getProductCurrency())
                 .setProductData(productData)
                 .build();
 
-        SessionCreateParams.LineItem lineItem
-                = SessionCreateParams.LineItem.builder()
-                .setQuantity(productRequest.getProductStock()) // Cantidad a comprar
+        SessionCreateParams.LineItem lineItem =
+                SessionCreateParams.LineItem.builder()
+                .setQuantity(productRequest.getProductPrice()) // Cantidad a comprar
                 .setPriceData(priceData) // SOLO un setPriceData
                 .build();
+
 
         SessionCreateParams params = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
@@ -54,15 +55,19 @@ public class StripeService {
                     .stripe_id(session.getId())
                     .stripe_url(session.getUrl())
                     .build();
+
+
         }catch (StripeException e){
             System.out.println(STR."There was an issue: \{e.getMessage()}");
 
-            return StripeResponseDTO.builder()
-                    .status("ERROR")
-                    .message(STR."Failed to create payment session: \{e.getMessage()}")
-                    .stripe_id(null)
-                    .stripe_url(null)
-                    .build();
+//            return StripeResponseDTO.builder()
+//                    .status("ERROR")
+//                    .message(STR."Failed to create payment session: \{e.getMessage()}")
+//                    .stripe_id(null)
+//                    .stripe_url(null)
+//                    .build();
         }
+
+        return null;
     }
 }

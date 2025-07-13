@@ -22,17 +22,17 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Integer id;
 
     @Column(unique = true,nullable = false)
     @Email(message = "Email needs to be valid")
     @NotBlank(message = "Email is required")
-    String email;
+    private String email;
 
     @Column(nullable = false)
     @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password need to contain at least 6 characters")
-    String password;
+    private String password;
 
     @Column(nullable = false)
     @NotBlank(message = "Nombre es obligatorio")

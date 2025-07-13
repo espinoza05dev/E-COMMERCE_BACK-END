@@ -1,36 +1,37 @@
 package saeg.ecommerceback.service;
 
-import com.stripe.model.Product;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-import saeg.ecommerceback.repository.IProductRepository;
+import saeg.ecommerceback.model.ProductRequest;
+import saeg.ecommerceback.repository.IProductRequestRepository;
 
 import java.time.Duration;
 
 @Service
-public class ProductService {
-    private final IProductRepository productRepository;
+
+public class ProductRequestService {
+    private final IProductRequestRepository productRepository;
     private final CacheService cacheService;
 
     private static final String PRODUCT_CACHE_KEY = "product:";
     private static final Duration CACHE_TTL = Duration.ofHours(1);
 
-    public ProductService(IProductRepository productRepository, CacheService cacheService) {
+    public ProductRequestService(IProductRequestRepository productRepository, CacheService cacheService) {
         this.productRepository = productRepository;
         this.cacheService = cacheService;
     }
 
-    public Product getProduct(Integer id) {
+    public ProductRequest getProduct(Integer id) {
         String cacheKey = PRODUCT_CACHE_KEY + id;
 
         // Intentar obtener del cache
-        Product cached = cacheService.getCachedObject(cacheKey, Product.class);
+        ProductRequest cached = cacheService.getCachedObject(cacheKey, ProductRequest.class);
         if (cached != null) {
             return cached;
         }
 
         // Si no está en cache, obtener de la base de datos
-        Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found"));
+        ProductRequest product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found"));
 
         // Guardar en cache
         cacheService.cacheObject(cacheKey, product, CACHE_TTL);
@@ -38,13 +39,14 @@ public class ProductService {
         return product;
     }
 
-    public Product updateProduct(Product product) {
-        Product saved = productRepository.save(product);
+    public ProductRequest updateProduct(ProductRequest product) {
+        ProductRequest saved = productRepository.save(product);
 
         // Invalidar cache
-        String cacheKey = PRODUCT_CACHE_KEY + product.getId();
+        String cacheKey = PRODUCT_CACHE_KEY + product.getProductId();
         cacheService.delete(cacheKey);
 
         return saved;
     }
+
 }

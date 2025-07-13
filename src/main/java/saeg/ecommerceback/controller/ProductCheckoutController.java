@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import saeg.ecommerceback.model.ProductRequest;
+import saeg.ecommerceback.dto.ProductRequestDTO;
 import saeg.ecommerceback.dto.StripeResponseDTO;
 import saeg.ecommerceback.service.StripeService;
 
@@ -23,7 +23,7 @@ public class ProductCheckoutController {
     }
 
     @PostMapping("/checkout")
-    public ResponseEntity<StripeResponseDTO> checkoutProducts(@RequestBody ProductRequest productRequest){
+    public ResponseEntity<StripeResponseDTO> checkoutProducts(@RequestBody ProductRequestDTO productRequest){
         StripeResponseDTO stripeResponseDTO = stripeService.checkoutProducts(productRequest);
 
         return ResponseEntity

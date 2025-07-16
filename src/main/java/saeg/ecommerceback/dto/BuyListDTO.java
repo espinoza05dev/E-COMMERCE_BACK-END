@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class BuyListDTO {
-    private Long buylistId;
+    private Integer buylistId;
     private String buylistusuarioId;
     private List<ItemBuyListDTO> buylistItems;
     private BigDecimal buylistSubtotal;
